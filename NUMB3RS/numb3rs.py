@@ -1,11 +1,7 @@
 import sys
 import copy
 
-MAP = []
-DEG = []
-PATH = []
 CACHE = []
-TEMP_CACHE = []
 
 TOWN = -1
 DAYS = -1
@@ -13,14 +9,9 @@ JAIL = -1
 DESTINATION = -1
 
 
-def calcDEG(deg, m):
-    for i in range(TOWN):
-        deg.append(sum(m[i]))
-
-
 def numb3rs(here, days):
-    if days == DAYS:
-        if here == DESTINATION:
+    if days == 0:
+        if here == JAIL:
             return 1.0
         else:
             return 0.0
@@ -32,9 +23,8 @@ def numb3rs(here, days):
     ret = 0.0
     for i in range(TOWN):
         if MAP[here][i]:
-            ret += (numb3rs(i, days + 1))
+            ret += (numb3rs(i, days - 1)) / DEG[i]
 
-    ret /= DEG[here]
     CACHE[here][days] = ret
     return ret
 
@@ -43,21 +33,21 @@ if __name__ ==  "__main__":
 
     for i in range(test_case):
         TOWN, DAYS, JAIL = map(int, sys.stdin.readline().split())
-        TEMP_CACHE = [[-1.0 for i in range(DAYS + 1)] for j in range(TOWN + 1)]
+        CACHE = [[-1.0 for i in range(DAYS + 1)] for j in range(TOWN)]
+        MAP = []
+        DEG = []
+
         for j in range(TOWN):
-            MAP.append(list(map(int, sys.stdin.readline().split())))
-        calcDEG(DEG, MAP)
+            line = list(map(int, sys.stdin.readline().split()))
+            MAP.append(line)
+            DEG.append(sum(line))
 
         count = int(sys.stdin.readline())
         calc_towns = list(map(int, sys.stdin.readline().split()))
         answer = []
 
         for t in calc_towns:
-            DESTINATION = t
-            CACHE = copy.deepcopy(TEMP_CACHE)
-            answer.append(str(numb3rs(JAIL, 0)))
+            answer.append(str(numb3rs(t, DAYS)))
         print(' '.join(answer))
-        
-        DEG.clear()
-        MAP.clear()
+
         answer.clear()
