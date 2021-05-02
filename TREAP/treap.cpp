@@ -45,8 +45,8 @@ NodePair split(Node* root, KeyType key) {
 
     // root가 Key보다 작으면 왼쪽 서브 트리를 쪼갠다.
     NodePair ls = split(root->left, key);
-    root->setLeft(ls.first);
-    return NodePair(root, ls.second);
+    root->setLeft(ls.second);
+    return NodePair(ls.first, root);
 }
 
 Node* insert(Node* root, Node* node) {
