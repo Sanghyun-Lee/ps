@@ -5,7 +5,7 @@ public:
         int l = area;
         int w = 1;
 
-        for(int i = area - 1; i > 0; i--) {
+        for(int i = area - 1; i > 1; i--) {
             if(area % i != 0)
                 continue;
             
