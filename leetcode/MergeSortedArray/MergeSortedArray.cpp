@@ -3,7 +3,6 @@ public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
         int m_idx = m - 1;
         int n_idx = n - 1;
-        int t_idx = m + n - 1;
 
         if (n == 0)
             return;
